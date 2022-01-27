@@ -26,7 +26,7 @@ To use the module, you have to first import it where needed at the top of the pa
 import GuestSurveySdk from 'react-native-guest-survey-sdk';
 ```
 
-Make sure to
+Make sure to call this function as soon as your app launches and before using the SDK
 
 ```
 GuestSurveySdk.configure(secretKey:string, language:string, enableDebugging:bool, (done: any) => {})
