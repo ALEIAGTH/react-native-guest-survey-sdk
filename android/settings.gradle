@@ -1,0 +1,5 @@
+rootProject.name = 'android'
+//include ':Geo4castSdk'
+
+include ':reactnativeguestsurveysdk'
+//project(':Geo4castSdk').projectDir = new File(rootProject.projectDir, '../../android/libs')

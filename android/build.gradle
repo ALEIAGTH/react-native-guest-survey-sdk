@@ -1,0 +1,92 @@
+apply plugin: 'com.android.library'
+
+buildscript {
+    if (project == rootProject) {
+        repositories {
+            google()
+            jcenter()
+        }
+
+        dependencies {
+            classpath 'com.android.tools.build:gradle:3.5.3'
+        }
+    }
+}
+repositories {
+  mavenLocal()
+  maven {
+    // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+    url("$rootDir/../node_modules/react-native/android")
+  }
+  flatDir {
+    dirs 'libs'
+  }
+  google()
+  jcenter()
+}
+
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+android {
+    compileSdkVersion safeExtGet('GuestSurveySdk_compileSdkVersion', 29)
+    buildToolsVersion safeExtGet('GuestSurveySdk_buildToolsVersion', '29.0.2')
+    defaultConfig {
+        minSdkVersion safeExtGet('GuestSurveySdk_minSdkVersion', 21)
+        targetSdkVersion safeExtGet('GuestSurveySdk_targetSdkVersion', 29)
+        versionCode 1
+        versionName "1.0"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    lintOptions {
+        disable 'GradleCompatible'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+
+
+dependencies {
+    //noinspection GradleDynamicVersion
+  //implementation fileTree(dir: 'libs', include: ['*.jar'])
+ // implementation(name: 'Geo4castSdk', ext: 'aar')
+  implementation 'fr.it4pme:geo4cast-sdk:1.0.2'
+  implementation "com.facebook.react:react-native:+"  // From node_modules
+
+  implementation 'androidx.appcompat:appcompat:1.3.0'
+  implementation 'com.google.android.material:material:1.4.0'
+  implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+
+  implementation 'com.confirmit.mobilesdk:mobilesdk:3.3.1'
+  implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+  implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
+
+  implementation 'com.android.volley:volley:1.1.0'
+  implementation 'org.altbeacon:android-beacon-library:2.16.4'
+  implementation 'com.squareup.retrofit2:retrofit-mock:2.4.0'
+  implementation 'androidx.recyclerview:recyclerview:1.0.0'
+  implementation 'com.google.code.gson:gson:2.8.2'
+  implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+  implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+  implementation "androidx.fragment:fragment:1.2.0"
+
+  implementation 'com.google.android.gms:play-services-maps:16.1.0'
+  implementation 'com.google.android.gms:play-services-location:16.0.0'
+  implementation 'com.google.android.gms:play-services-ads:16.0.0'
+  implementation 'com.google.android.gms:play-services-places:16.0.0'
+
+  implementation 'org.skyscreamer:jsonassert:1.4.0'
+  implementation 'org.apache.commons:commons-lang3:3.5'
+
+}

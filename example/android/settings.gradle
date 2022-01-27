@@ -1,0 +1,6 @@
+rootProject.name = 'GuestSurveySdkExample'
+apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
+include ':app'
+
+include ':reactnativeguestsurveysdk'
+project(':reactnativeguestsurveysdk').projectDir = new File(rootProject.projectDir, '../../android')
