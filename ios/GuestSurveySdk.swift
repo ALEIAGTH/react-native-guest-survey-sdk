@@ -15,6 +15,7 @@ class GuestSurveySdk: NSObject {
             Geo4Cast.configure(secretKey: secretKey, language: language) { completed in
                 Geo4Cast.shared.enableDebugLogging = enableDebugging
                 do{
+                    Geo4Cast.shared.setUserVariable(key: "user-language", value: language)
                     ConfirmitSDK.enableLog(enable: enableDebugging)
                     ConfirmitSDK.Setup().configure()
                     if let clientId = Geo4Cast.shared.surveyVendorClientID, let secretKey = Geo4Cast.shared.surveyVendorClientSecret{
