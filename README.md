@@ -119,15 +119,6 @@ then, run pod update in the terminal
 pod update
 ```
 
-## Secret Key
-
-Before using our SDK, you should add a new key in your project's info.plist file for the iOS React-Native Project.
-
-```
-<key>Geo4CastSDKSecretKey</key>
-<string>_key_supplied_by_vendor_</string>
-```
-
 The value of this key should be received with your onboarding kit from ALEIA
 
 ## Permissions
