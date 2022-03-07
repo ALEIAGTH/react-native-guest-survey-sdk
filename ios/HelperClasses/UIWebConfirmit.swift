@@ -20,7 +20,7 @@ class UIWebConfirmit: UIViewController, ProgramCallback{
     // ProgramCallback implementation starts
     
     func onWebSurveyStart(surveyWebView: SurveyWebViewController) {
-        self.startedSurveyData = surveyWebView.customData        
+        self.startedSurveyData = surveyWebView.customData
         DispatchQueue.main.async {
             if let topView = UIApplication.getTopViewController(){
                 surveyWebView.delegate = self
@@ -65,7 +65,7 @@ extension UIWebConfirmit: SurveyWebViewControllerDelegate {
         print("survey id: \(projectId) finished")
         guard let eventName = self.startedSurveyData["event"] as? String else{
             return
-        }        
+        }
         Geo4Cast.shared.updateSurveyStatus(status: 1,eventName: eventName) { (finished, error) in
             print("survey has completed with eventName \(projectId)")
         }
@@ -76,9 +76,39 @@ extension UIWebConfirmit: SurveyWebViewControllerDelegate {
     }
 }
 
+extension UIWebConfirmit{
+    
+    func getPrograms() -> [Program] {
+        var programs: [Program] = []
+        let servers = try! ConfirmitServer.getServers()
+        for server in servers {
+            do {
+                let program = try TriggerSDK.getPrograms(serverId: server.serverId)
+                programs += program
+            } catch {
+                // server doesn't exist
+            }
+        }
+        return programs.sorted(by: { (p1, p2) -> Bool in
+            p1.serverId > p2.serverId
+        })
+    }
+    
+    func setAllDelegate() {
+        for program in getPrograms() {
+            setDelegate(serverId: program.serverId, programKey: program.programKey)
+        }
+    }
+    
+    func setDelegate(serverId: String, programKey: String) {
+        TriggerSDK.setCallback(serverId: serverId, programKey: programKey, callback: self)
+    }
+    
+}
+
 
 class AppUniqueDeviceIdProvider: UniqueIdProvider {
-    func getUniqueId() -> String {        
+    func getUniqueId() -> String {
         return Geo4Cast.shared.userId
     }
 }

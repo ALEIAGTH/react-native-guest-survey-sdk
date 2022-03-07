@@ -14,7 +14,7 @@ yarn
 yarn add react-native-guest-survey-sdk
 ```
 
-If you have yarn scripts enabled, dont forget to run <mark style="background-color: lightgrey">yarn</mark> to install the dependancies automatically.
+If you have yarn scripts enabled, don't forget to run <mark style="background-color: lightgrey">yarn</mark> to install the dependencies automatically.
 
 As for iOS installation, disable flipper and add <mark style="background-color: lightgrey">use_frameworks!</mark> in the target of the podfile. Before reading running the module, make sure to read [iOS](#iOSHeader) and [Android](#andHeader) sections below for in depth configuration before you can run the module
 
@@ -29,7 +29,7 @@ import GuestSurveySdk from 'react-native-guest-survey-sdk';
 Make sure to call this function as soon as your app launches and before using the SDK
 
 ```
-GuestSurveySdk.configure(secretKey:string, language:string, enableDebugging:bool, (done: any) => {})
+GuestSurveySdk.configure(secretKey:string, programKey:string, language:string, enableDebugging:bool, (done: any) => {})
 ```
 
 **Start Collection**
@@ -58,17 +58,16 @@ GuestSurveySdk.getUserSurveys((values: [any]) => {})
 
 **TriggerSurvey**
 
-_Trigger ConfirmitMobile SDK to present the survey according to the programKey and eventName. This method should present a native Webview contrller inApp with designed survey components according the Confirmit Survey Design_
+_Trigger ConfirmitMobile SDK to present the survey according to the programKey, eventName and any other parameters(such as language, attractionId, etc..) that is intended to be received and viewed from the control center. This method should present a native Webview controller inApp with designed survey components according the Confirmit Survey Design_
 
 ```
-GuestSurveySdk.triggerSurvey(<programKey:str>, <eventName:str>)
+GuestSurveySdk.triggerSurvey(<programKey:str>, <eventName:str>, <parameters:any>)
 ```
 
 **AddPushNotifcationToken**
 
-_Add Remote notifications token to the Geo4Cast payload
-To be set after the reponse of **didRegisterForRemoteNotificationsWithDeviceToken**
-This ƒunction should load the device token in the SDK._
+_**OPTIONAL**
+Add Remote notifications token to the Geo4Cast payload. To be set after the response of **didRegisterForRemoteNotificationsWithDeviceToken**. This function should load the device token in the SDK, if needed._
 
 ```
 GuestSurveySdk.addPushNotificationToken(token:<**notifications_token**>**>)
@@ -76,13 +75,13 @@ GuestSurveySdk.addPushNotificationToken(token:<**notifications_token**>**>)
 
 **SendLog**
 
-_Open default mail app to send the app generated logs from Geo4CastSDK. Do not use after use logout as the logs are deleted on user logout_
+_Opens default mail app on device to send the app generated logs from Geo4CastSDK debugging.Do not use after use logout as the logs are deleted on user session logout._
 
 ```
 GuestSurveySdk.sendLog()
 ```
 
-**_Naming of the functions and the their final functionalities, callbacks, etc.. are tentative and might change._**
+**_IMPORTANT: Naming of the functions and the their final functionalities, callbacks, etc.. are tentative and might change._**
 
 ### Additional Resources
 
@@ -96,7 +95,7 @@ GuestSurveySdk.sendLog()
 
 ## Podfile
 
-Add framework support in the target part of the Podfile and comment out flipper for the moduel wrapper to work.
+Add framework support in the target part of the Podfile and comment out flipper for the module wrapper to work.
 
 ```
 use_frameworks!
@@ -123,8 +122,8 @@ The value of this key should be received with your onboarding kit from ALEIA
 
 ## Permissions
 
-In the _info.plist_ file, dont forget to add the relevant permissions for our SDK to work.
-_Ommit the unneeded keys and personalize the values with your own message_.
+In the _info.plist_ file, don't forget to add the relevant permissions for our SDK to work.
+_Omit the unneeded keys and personalize the values with your own message_.
 
 ```
 <key>NSBluetoothAlwaysUsageDescription</key>
@@ -175,11 +174,11 @@ Before using our SDK, you could add a new key in your project's String file.
 
 ```
 
-The value of this key should be received with your onboarding kit from IT4PME or GEO4CAST
+The value of this key should be received with your onboarding kit from ALEIA
 
 ## Permissions
 
-In the AndroidManifest file, dont forget to add the relevant permissions for our SDK to work.
+In the AndroidManifest file, don't forget to add the relevant permissions for our SDK to work.
 
 ```
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -206,7 +205,7 @@ In the AndroidManifest file, dont forget to add the relevant permissions for our
 
 ```
 
-In the strings file, Ommit the unneeded keys and personalize the values with your own message.
+In the strings file, Omit the unneeded keys and personalize the values with your own message.
 
 ```
 

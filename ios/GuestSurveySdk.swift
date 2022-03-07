@@ -4,23 +4,36 @@ import CoreFoundation
 
 @objc(GuestSurveySdk)
 class GuestSurveySdk: NSObject {
-
     @objc static func requiresMainQueueSetup() -> Bool {
         return false
     }
     
-    @objc(configure:language:enableDebugging:callback:)
-    func configure(secretKey:String, language:String, enableDebugging:Bool,callback: @escaping RCTResponseSenderBlock){
+    @objc(configure:programKey:language:enableDebugging:callback:)
+    func configure(secretKey:String, programKey:String, language:String, enableDebugging:Bool,callback: @escaping RCTResponseSenderBlock){
         DispatchQueue.main.async {
             Geo4Cast.configure(secretKey: secretKey, language: language) { completed in
                 Geo4Cast.shared.enableDebugLogging = enableDebugging
                 do{
                     Geo4Cast.shared.setUserVariable(key: "user-language", value: language)
                     ConfirmitSDK.enableLog(enable: enableDebugging)
-                    ConfirmitSDK.Setup().configure()
+                    ConfirmitSDK.Setup().rootPath(path: nil).configure()
+                    SurveySDK.setUniqueIdProvider(provider: AppUniqueDeviceIdProvider())
                     if let clientId = Geo4Cast.shared.surveyVendorClientID, let secretKey = Geo4Cast.shared.surveyVendorClientSecret{
                         try ConfirmitServer.configureUS(clientId: clientId, clientSecret: secretKey)
-                        callback([completed])
+                        DispatchQueue.main.async {
+                            let feedbackManager = UIWebConfirmit()
+                            feedbackManager.setAllDelegate()
+                        }
+                        TriggerSDK.download(serverId: ConfirmitServer.us.serverId, programKey: programKey)  { success, error in
+                            if success{
+                                callback([completed])
+                            }else if let error = error{
+                                callback([completed,error])
+                            }
+                        }
+                    }else{
+                        let error = NSError(domain: "Geo4CastSDKError", code: 9999, userInfo: nil)
+                        callback([completed,error])
                     }
                 }catch(let error){
                     callback([completed,error])
@@ -57,28 +70,15 @@ class GuestSurveySdk: NSObject {
     }
     
     ///Trigger the survey with the programKey and eventName created by the survey studio
-    @objc(triggerSurvey:withEvent:)
-    func triggerSurvey(programKey:String, withEvent eventName:String)->Void{
-        guard let server = ConfirmitServer.us else{
+    @objc(triggerSurvey:withEvent:parameters:)
+    func triggerSurvey(programKey:String, withEvent eventName:String, parameters:Any?)->Void{
+        guard var parameters = parameters as? Dictionary<String,String?> else {
             return
         }
-        let serverId = server.serverId
-        let programKey = programKey
-        SurveySDK.setUniqueIdProvider(provider: AppUniqueDeviceIdProvider())
-        TriggerSDK.download(serverId: serverId, programKey: programKey)  { success, error in
-            if success{
-                print("success")
-                //                    feedbackManager.setAllDelegate()
-                DispatchQueue.main.async {
-                    let feedbackManager = UIWebConfirmit()
-                    TriggerSDK.setCallback(serverId: serverId, programKey: programKey, callback: feedbackManager)
-                    TriggerSDK.notifyEvent(serverId: ConfirmitServer.us.serverId, programKey: programKey, event: eventName)
-                }
-            }else if let error = error{
-                print("error:",error)
-            }else{
-                print("unknown error")
-            }
+        parameters["userId"] = Geo4Cast.shared.userId
+
+        DispatchQueue.main.async {
+            TriggerSDK.notifyEvent(serverId: ConfirmitServer.us.serverId, programKey: programKey, event: eventName, data: parameters)
         }
     }
     

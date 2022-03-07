@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Button } from 'react-native';
 import GuestSurveySdk from 'react-native-guest-survey-sdk';
+var testValues = ['<test_programKey>', '<test_eventName>', '<Geo4CastSDK_Secret>', '<test_user_id>']
 
 export default function App() {
   useEffect(() => {
     GuestSurveySdk.configure(
-      '<GEO4CASTSECRETKEYHERE>',
+      testValues[2],
+      testValues[0],
       'en',
       true,
       (done: any) => {
@@ -20,7 +22,8 @@ export default function App() {
         title="1.Configure"
         onPress={async () => {
           GuestSurveySdk.configure(
-            '<GEO4CASTSECRETKEYHERE>',
+            testValues[2],
+            testValues[0],
             'en',
             true,
             (done: any) => {
@@ -35,7 +38,7 @@ export default function App() {
       <Button
         title="2.Start Collection"
         onPress={async () => {
-          GuestSurveySdk.startCollection('201201313');
+          GuestSurveySdk.startCollection(testValues[3]);
         }}
         accessibilityLabel="startCollection"
         color="black"
@@ -63,7 +66,7 @@ export default function App() {
       <Button
         title="5.Trigger Confirmit Sample Survey Event"
         onPress={async () => {
-          GuestSurveySdk.triggerSurvey('Mps8SQ', 'onFeedbackButton');
+          GuestSurveySdk.triggerSurvey(testValues[0], testValues[1], { 'language': 'en' });
         }}
         accessibilityLabel="Trigger Sample Survey Event"
         color="green"
@@ -72,7 +75,7 @@ export default function App() {
       <Button
         title="6.Add notification token"
         onPress={async () => {
-          GuestSurveySdk.addPushNotificationToken('1231241241243');
+          GuestSurveySdk.addPushNotificationToken(testValues[4]);
         }}
         accessibilityLabel="Add Notification Token"
         color="yellow"
