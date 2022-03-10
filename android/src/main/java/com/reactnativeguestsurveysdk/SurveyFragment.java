@@ -40,6 +40,7 @@ public class SurveyFragment extends FragmentActivity implements ProgramCallback 
     String appName = "";
     String appKey = "";
     String email = "";
+    String language = "";
 
    @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,12 @@ public class SurveyFragment extends FragmentActivity implements ProgramCallback 
         appName = extras.getString("appName");
         appKey = extras.getString("appKey");
         email = extras.getString("email");
+        language = extras.getString("language");
+
         Map<String, String> map = new HashMap<>();
+        map.put("userId",email);
+        map.put("language",language);
+
         TriggerSDK.INSTANCE.setCallback(serverId,programKey,SurveyFragment.this);
         TriggerSDK.INSTANCE.notifyEvent(serverId, programKey, eventName, map);
     }
