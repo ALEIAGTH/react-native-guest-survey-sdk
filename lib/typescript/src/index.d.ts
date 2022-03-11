@@ -1,5 +1,5 @@
 declare type GuestSurveySdkType = {
-    configure(secretKey: string, programKey: string,language: string, enableDebugging: boolean, callback: (callback: any) => void): void;
+    configure(secretKey: string, programKey: string, language: string, enableDebugging: boolean, callback: (callback: any) => void): void;
     startCollection(userId: string): void;
     stopCollection(): void;
     addPushNotificationToken(token: string): void;
