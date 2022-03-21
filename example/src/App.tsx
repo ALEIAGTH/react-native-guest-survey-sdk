@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Button } from 'react-native';
 import GuestSurveySdk from 'react-native-guest-survey-sdk';
-var testValues = ['<ConfirmITProgramKey>', 'onFeedbackButton', '<Geo4CastSecretSDKKey>', '<UserID>']
+var testValues = ['Mps8SQ', 'onFeedbackButton', '205b82c9958dacfbd1adfd08e5f06b72cc34fc2cd9ef994f441f1f29ff2f5f', '201201313']
 
 export default function App() {
   useEffect(() => {
