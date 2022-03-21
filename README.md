@@ -164,18 +164,6 @@ In the info.plist file.
 
 # Android Developer Setup for Geo4CastSDK
 
-## Secret Key
-
-Before using our SDK, you could add a new key in your project's String file.
-
-```
-
-<string name="Geo4CastSDKSecretKey">_key_supplied_by_vendor_</string>
-
-```
-
-The value of this key should be received with your onboarding kit from ALEIA
-
 ## Permissions
 
 In the AndroidManifest file, don't forget to add the relevant permissions for our SDK to work.
@@ -273,10 +261,10 @@ The react-native model will be hosted on NPM. Link to be shared later
 
 ### Android Dependencies
 
-[Geo4CastSDK](https://search.maven.org/artifact/fr.it4pme/geo4cast-sdk/1.0.2/aar) is available on Maven for Android
+[Geo4CastSDK](https://search.maven.org/artifact/fr.it4pme/geo4cast-sdk/1.0.7/aar) is available on Maven for Android
 
 ```
 
-implementation 'fr.it4pme:geo4cast-sdk:1.0.2'
+implementation 'fr.it4pme:geo4cast-sdk:1.0.7'
 
 ```
