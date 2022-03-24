@@ -1,6 +1,6 @@
 {
   "name": "react-native-guest-survey-sdk",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "React Native module for Geo4Cast with survey engine support.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -28,7 +28,7 @@
     "prepare": "bob build",
     "release": "release-it",
     "example": "yarn --cwd example",
-    "pods": "cd example && pod-install --quiet",
+    "pods": "cd example/ios && pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods"
   },
   "keywords": [

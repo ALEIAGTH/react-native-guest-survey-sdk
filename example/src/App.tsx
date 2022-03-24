@@ -1,7 +1,13 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Button } from 'react-native';
 import GuestSurveySdk from 'react-native-guest-survey-sdk';
-var testValues = ['Mps8SQ', 'onFeedbackButton', '205b82c9958dacfbd1adfd08e5f06b72cc34fc2cd9ef994f441f1f29ff2f5f', '201201313']
+
+var testValues = [
+  '<ConfirmITProgramKey>',
+  'onFeedbackButton',
+  '<Geo4CastSecretSDKKey>',
+  '<UserID>',
+];
 
 export default function App() {
   useEffect(() => {
@@ -66,7 +72,9 @@ export default function App() {
       <Button
         title="5.Trigger Confirmit Sample Survey Event"
         onPress={async () => {
-          GuestSurveySdk.triggerSurvey(testValues[0], testValues[1], { 'language': 'en' });
+          GuestSurveySdk.triggerSurvey(testValues[0], testValues[1], {
+            language: 'en',
+          });
         }}
         accessibilityLabel="Trigger Sample Survey Event"
         color="green"
@@ -76,7 +84,6 @@ export default function App() {
         title="6.Add notification token"
         onPress={async () => {
           GuestSurveySdk.addPushNotificationToken(testValues[4]);
-
         }}
         accessibilityLabel="Add Notification Token"
         color="yellow"
