@@ -149,7 +149,7 @@ public class GuestSurveySdkModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public static void sendLog() {
-    Locatme.sendLog(mContext);
+    Locatme.sendLog(mContext.getApplicationContext());
   }
 
   @ReactMethod
